@@ -29,7 +29,7 @@ namespace CrudAsociacion.Controllers
                         oPersona.fecha_vinculacion = model.fecha_vinculacion;
                         oPersona.primer_nombre = model.primer_nombre;
                         oPersona.primer_apellido = model.primer_apellido;
-                        oPersona.segundo_nombre = model.segundo_apellido;
+                        oPersona.segundo_nombre = model.segundo_nombre;
                         oPersona.segundo_apellido = model.segundo_apellido;
                         oPersona.profesion = model.profesion;
                         oPersona.telefono_celular = model.telefono_celular;

@@ -17,6 +17,7 @@ namespace CrudAsociacion.Controllers
         private bd_asociacionEntities3 db = new bd_asociacionEntities3();
 
         // GET: api/Personas
+        [Authorize]
         public IQueryable<personas> Getpersonas()
         {
             return db.personas;
