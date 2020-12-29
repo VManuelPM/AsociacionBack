@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bd_asociacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="detalle_pagos">
+          <Key>
+            <PropertyRef Name="id_pago" />
+          </Key>
+          <Property Name="id_pago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_persona" Type="int" Nullable="false" />
+          <Property Name="valor_pago" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="fecha_pago" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="personas">
+          <Key>
+            <PropertyRef Name="id_persona" />
+          </Key>
+          <Property Name="id_persona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dni_persona" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="primer_nombre" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="segundo_nombre" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="primer_apellido" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="segundo_apellido" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="datetime" Nullable="false" />
+          <Property Name="direccion_residencia" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="ciudad_residencia" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="telefono_celular" Type="int" Nullable="false" />
+          <Property Name="profesion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_vinculacion" Type="datetime" Nullable="false" />
+          <Property Name="fecha_vencimiento" Type="datetime" Nullable="false" />
+          <Property Name="fecha_salida" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario_login">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass_usuario" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_detalle_pagos_personas">
+          <End Role="personas" Type="Self.personas" Multiplicity="1" />
+          <End Role="detalle_pagos" Type="Self.detalle_pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personas">
+              <PropertyRef Name="id_persona" />
+            </Principal>
+            <Dependent Role="detalle_pagos">
+              <PropertyRef Name="id_persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_asociacionModelStoreContainer">
+          <EntitySet Name="detalle_pagos" EntityType="Self.detalle_pagos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personas" EntityType="Self.personas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario_login" EntityType="Self.usuario_login" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_detalle_pagos_personas" Association="Self.FK_detalle_pagos_personas">
+            <End Role="personas" EntitySet="personas" />
+            <End Role="detalle_pagos" EntitySet="detalle_pagos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bd_asociacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="detalle_pagos">
+          <Key>
+            <PropertyRef Name="id_pago" />
+          </Key>
+          <Property Name="id_pago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_persona" Type="Int32" Nullable="false" />
+          <Property Name="valor_pago" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="fecha_pago" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="personas" Relationship="Self.FK_detalle_pagos_personas" FromRole="detalle_pagos" ToRole="personas" />
+        </EntityType>
+        <EntityType Name="personas">
+          <Key>
+            <PropertyRef Name="id_persona" />
+          </Key>
+          <Property Name="id_persona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dni_persona" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="primer_nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="segundo_nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="primer_apellido" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="segundo_apellido" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="direccion_residencia" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ciudad_residencia" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="telefono_celular" Type="Int32" Nullable="false" />
+          <Property Name="profesion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fecha_vinculacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_vencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_salida" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="detalle_pagos" Relationship="Self.FK_detalle_pagos_personas" FromRole="personas" ToRole="detalle_pagos" />
+        </EntityType>
+        <EntityType Name="usuario_login">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="pass_usuario" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_detalle_pagos_personas">
+          <End Role="personas" Type="Self.personas" Multiplicity="1" />
+          <End Role="detalle_pagos" Type="Self.detalle_pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personas">
+              <PropertyRef Name="id_persona" />
+            </Principal>
+            <Dependent Role="detalle_pagos">
+              <PropertyRef Name="id_persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_asociacionEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="detalle_pagos" EntityType="Self.detalle_pagos" />
+          <EntitySet Name="personas" EntityType="Self.personas" />
+          <EntitySet Name="usuario_login" EntityType="Self.usuario_login" />
+          <AssociationSet Name="FK_detalle_pagos_personas" Association="Self.FK_detalle_pagos_personas">
+            <End Role="personas" EntitySet="personas" />
+            <End Role="detalle_pagos" EntitySet="detalle_pagos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bd_asociacionModelStoreContainer" CdmEntityContainer="bd_asociacionEntities3">
+          <EntitySetMapping Name="detalle_pagos">
+            <EntityTypeMapping TypeName="bd_asociacionModel.detalle_pagos">
+              <MappingFragment StoreEntitySet="detalle_pagos">
+                <ScalarProperty Name="id_pago" ColumnName="id_pago" />
+                <ScalarProperty Name="id_persona" ColumnName="id_persona" />
+                <ScalarProperty Name="valor_pago" ColumnName="valor_pago" />
+                <ScalarProperty Name="fecha_pago" ColumnName="fecha_pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personas">
+            <EntityTypeMapping TypeName="bd_asociacionModel.personas">
+              <MappingFragment StoreEntitySet="personas">
+                <ScalarProperty Name="id_persona" ColumnName="id_persona" />
+                <ScalarProperty Name="dni_persona" ColumnName="dni_persona" />
+                <ScalarProperty Name="primer_nombre" ColumnName="primer_nombre" />
+                <ScalarProperty Name="segundo_nombre" ColumnName="segundo_nombre" />
+                <ScalarProperty Name="primer_apellido" ColumnName="primer_apellido" />
+                <ScalarProperty Name="segundo_apellido" ColumnName="segundo_apellido" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="direccion_residencia" ColumnName="direccion_residencia" />
+                <ScalarProperty Name="ciudad_residencia" ColumnName="ciudad_residencia" />
+                <ScalarProperty Name="telefono_celular" ColumnName="telefono_celular" />
+                <ScalarProperty Name="profesion" ColumnName="profesion" />
+                <ScalarProperty Name="fecha_vinculacion" ColumnName="fecha_vinculacion" />
+                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+                <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario_login">
+            <EntityTypeMapping TypeName="bd_asociacionModel.usuario_login">
+              <MappingFragment StoreEntitySet="usuario_login">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="pass_usuario" ColumnName="pass_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
