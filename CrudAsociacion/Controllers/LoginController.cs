@@ -1,5 +1,8 @@
-﻿using CrudAsociacion.Models.Request;
+﻿using CrudAsociacion.Models;
+using CrudAsociacion.Models.Request;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Web.Http;
@@ -13,6 +16,9 @@ namespace CrudAsociacion.Controllers
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
+
+        private bd_asociacionEntities3 db = new bd_asociacionEntities3();
+
         [HttpGet]
         [Route("echoping")]
         public IHttpActionResult EchoPing()
@@ -28,24 +34,49 @@ namespace CrudAsociacion.Controllers
             return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
         }
 
+        public List<LoginRequest> findByUsername(string username)
+        {
+            return db.usuario_login
+                .Where(u => u.usuario == username)
+                .Select(u => new LoginRequest { usuario = u.usuario, pass_usuario = u.pass_usuario })
+                .ToList();
+                
+        }
+
         [HttpPost]
         [Route("authenticate")]
         public IHttpActionResult Authenticate(LoginRequest login)
         {
+            bool isCredentialValid = false;
+            bool isUserValid = false;
+
             if (login == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            //TODO: Validate credentials Correctly, this code is only for demo !!
-            bool isCredentialValid = (login.pass_usuario == "123456");
-            if (isCredentialValid)
+            List<LoginRequest> usuario = findByUsername(login.usuario);
+
+            if (usuario.Count > 0)
             {
-                var token = TokenGenerator.GenerateTokenJwt(login.usuario);
-                return Ok(token);
+                foreach (LoginRequest u in usuario) {
+                    isCredentialValid = (login.pass_usuario == u.pass_usuario.Trim());
+                    isUserValid = (login.usuario == u.usuario.Trim());
+                }
+
+                if (isCredentialValid && isUserValid)
+                {
+                    var token = TokenGenerator.GenerateTokenJwt(login.usuario);
+                    return Ok(token);
+                }
+                else
+                {
+                    return Unauthorized();
+                }
             }
             else
             {
-                return Unauthorized();
+                return InternalServerError();
             }
+
         }
     }
 }
