@@ -6,12 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace CrudAsociacion.Controllers
 {
     /// <summary>
     /// login controller class for authenticate users
     /// </summary>
+    /// 
+    
     [AllowAnonymous]
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
@@ -65,6 +68,7 @@ namespace CrudAsociacion.Controllers
                 if (isCredentialValid && isUserValid)
                 {
                     var token = TokenGenerator.GenerateTokenJwt(login.usuario);
+
                     return Ok(token);
                 }
                 else

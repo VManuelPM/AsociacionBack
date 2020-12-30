@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace CrudAsociacion
 {
@@ -14,6 +15,9 @@ namespace CrudAsociacion
 
             // Rutas de API web
             config.MapHttpAttributeRoutes();
+
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
 
             config.MessageHandlers.Add(new TokenValidationHandler());
 
