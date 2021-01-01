@@ -11,6 +11,7 @@ namespace CrudAsociacion.Controllers
     public class PersonaController : ApiController
     {
         [HttpPost]
+        [Authorize]
         public IHttpActionResult Post([FromBody] PersonaRequest model)
         {
             using (Models.bd_asociacionEntities3 db = new Models.bd_asociacionEntities3())
