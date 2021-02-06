@@ -36,7 +36,7 @@ namespace CrudAsociacion.Controllers
                         oPersona.telefono_celular = model.telefono_celular;
                         db.personas.Add(oPersona);
                         db.SaveChanges();
-                        foreach (var oModelDetallePagos in model.detallePagos)
+                        foreach (var oModelDetallePagos in model.detalle_pagos)
                         {
                             Models.detalle_pagos oDetallePago = new Models.detalle_pagos();
                             oDetallePago.fecha_pago = oModelDetallePagos.fecha_pago;

@@ -21,7 +21,7 @@ namespace CrudAsociacion.Models.Request
         public DateTime fecha_vencimiento { get; set; }
         public DateTime fecha_salida { get; set; }
 
-        public List<DetallePagos> detallePagos { get; set; }
+        public List<DetallePagos> detalle_pagos { get; set; }
     }
 
     public class DetallePagos
